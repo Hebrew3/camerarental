@@ -1,56 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:bookmyshoot_camerarental/screen/home_screen.dart';
-import 'package:bookmyshoot_camerarental/screen/Dashboard.dart';
-import 'package:bookmyshoot_camerarental/utils/theme.dart';
-
+import 'package:bookmyshoot_camerarental/worldtime/Home.dart';
+import 'package:bookmyshoot_camerarental/worldtime/choosing_location.dart';
+import 'package:bookmyshoot_camerarental/worldtime/loading.dart';
 void main() {
-  runApp(const BookMyShootApp());
+  runApp(MyApp());
 }
 
-class BookMyShootApp extends StatelessWidget {
-  const BookMyShootApp({Key? key}) : super(key: key);
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'BookMyShoot',
-      theme: appTheme,
-      initialRoute: Routes.home,
-      onGenerateRoute: RouteGenerator.generateRoute,
-      debugShowCheckedModeBanner: false,
+      initialRoute: '/',
       routes: {
-        Routes.home: (context) => const HomeScreen(),
-        Routes.dashboard: (context) => const DashboardScreen(),
+        '/': (context) => Loading(),
+        '/home': (context) => Home(),
+        '/location': (context) => ChooseLocation(),
       },
     );
-  }
-}
-
-class Routes {
-  static const String home = '/';
-  static const String login = '/login';
-  static const String dashboard = '/dashboard';
-  // Add other route names as needed
-}
-
-class RouteGenerator {
-  static Route<dynamic> generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case Routes.home:
-        return MaterialPageRoute(builder: (_) => const HomeScreen());
-      case Routes.dashboard:
-        return MaterialPageRoute(builder: (_) => const DashboardScreen());
-      default:
-        return _errorRoute();
-    }
-  }
-
-  static Route<dynamic> _errorRoute() {
-    return MaterialPageRoute(builder: (_) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('Error')),
-        body: const Center(child: Text('Page not found!')),
-      );
-    });
   }
 }
