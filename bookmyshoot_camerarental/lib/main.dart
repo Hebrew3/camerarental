@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bookmyshoot_camerarental/screen/home_screen.dart';
-import 'package:bookmyshoot_camerarental/screen/Dashboard.dart';
+import 'package:bookmyshoot_camerarental/screen/dashboard.dart';
+import 'package:bookmyshoot_camerarental/screen/rent_equipment_screen.dart'; // Add this import
 import 'package:bookmyshoot_camerarental/utils/theme.dart';
 
 void main() {
@@ -21,6 +22,7 @@ class BookMyShootApp extends StatelessWidget {
       routes: {
         Routes.home: (context) => const HomeScreen(),
         Routes.dashboard: (context) => const DashboardScreen(),
+        Routes.rent: (context) => const RentEquipmentScreen(), // Add this route
       },
     );
   }
@@ -30,7 +32,7 @@ class Routes {
   static const String home = '/';
   static const String login = '/login';
   static const String dashboard = '/dashboard';
-  // Add other route names as needed
+  static const String rent = '/rent'; // Add this route constant
 }
 
 class RouteGenerator {
@@ -40,6 +42,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const HomeScreen());
       case Routes.dashboard:
         return MaterialPageRoute(builder: (_) => const DashboardScreen());
+      case Routes.rent:
+        return MaterialPageRoute(builder: (_) => const RentEquipmentScreen()); // Add this case
       default:
         return _errorRoute();
     }

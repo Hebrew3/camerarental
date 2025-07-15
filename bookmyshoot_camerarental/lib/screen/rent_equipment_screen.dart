@@ -101,7 +101,7 @@ class RentEquipmentScreen extends StatelessWidget {
                 decoration: InputDecoration(
                   labelText: 'Price',
                   labelStyle: TextStyle(color: Colors.grey[400]),
-                  prefixText: '\$ ',
+                  prefixText: '₱ ',  // Changed from \$ to ₱
                   prefixStyle: const TextStyle(color: Colors.white),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),

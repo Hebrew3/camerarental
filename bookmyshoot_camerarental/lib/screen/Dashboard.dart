@@ -103,7 +103,7 @@ class DashboardScreen extends StatelessWidget {
         Expanded(
           child: _StatCard(
             title: 'Revenue',
-            value: '\$1,240',
+            value: '₱1,240',  // Changed from \$ to ₱
             icon: Icons.attach_money,
             color: const Color(0xFFFF6B6B),  // Coral
           ),
@@ -119,21 +119,21 @@ class DashboardScreen extends StatelessWidget {
         'gear': 'Canon EOS R5', 
         'date': 'Today, 2:00 PM',
         'status': 'Confirmed',
-        'amount': '\$250'
+        'amount': '₱250'  // Changed from \$ to ₱
       },
       {
         'name': 'Jane Smith', 
         'gear': 'Sony A7IV', 
         'date': 'Tomorrow, 10:00 AM',
         'status': 'Pending',
-        'amount': '\$180'
+        'amount': '₱180'  // Changed from \$ to ₱
       },
       {
         'name': 'Mike Johnson', 
         'gear': 'Full Lighting Kit', 
         'date': 'Jun 15, 1:30 PM',
         'status': 'Completed',
-        'amount': '\$350'
+        'amount': '₱350'  // Changed from \$ to ₱
       },
     ];
 

@@ -74,27 +74,21 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFF121212),  // Dark background
-                Color(0xFF242424),  // Slightly lighter dark
+                Color(0xFF121212),
+                Color(0xFF242424),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
           ),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search, color: Colors.white),
-            onPressed: () {},
-          ),
-        ],
       ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFF121212),  // Dark background
-              Color(0xFF1E1E1E),  // Slightly lighter dark
+              Color(0xFF121212),
+              Color(0xFF1E1E1E),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -106,8 +100,8 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFF121212),  // Dark background
-              Color(0xFF242424),  // Slightly lighter dark
+              Color(0xFF121212),
+              Color(0xFF242424),
             ],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
@@ -122,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.transparent,
-          selectedItemColor: const Color(0xFFE6B325),  // Gold
+          selectedItemColor: const Color(0xFFE6B325),
           unselectedItemColor: Colors.grey,
           items: const [
             BottomNavigationBarItem(
@@ -168,8 +162,8 @@ class HomeContentScreen extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color(0xFF121212),  // Dark background
-                        Color(0xFF1E1E1E),  // Slightly lighter dark
+                        Color(0xFF121212),
+                        Color(0xFF1E1E1E),
                       ],
                     ),
                   ),
@@ -198,8 +192,8 @@ class HomeContentScreen extends StatelessWidget {
                           ],
                           gradient: const LinearGradient(
                             colors: [
-                              Color(0xFF2C3E50),  // Dark blue-gray
-                              Color(0xFF4CA1AF),  // Teal
+                              Color(0xFF2C3E50),
+                              Color(0xFF4CA1AF),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -249,7 +243,7 @@ class HomeContentScreen extends StatelessWidget {
                           _buildActionButton(
                             context,
                             'Explore Dashboard',
-                            const Color(0xFF4ECDC4),  // Teal
+                            const Color(0xFF4ECDC4),
                             '/dashboard',
                             Icons.dashboard,
                           ),
@@ -309,7 +303,7 @@ class CameraItemsScreen extends StatelessWidget {
       description: 'Professional mirrorless camera',
       price: 120.0,
       rating: 4.8,
-      imageUrl: 'assets/placeholder_camera.jpg',
+      imageUrl: 'assets/cameras/canon_eos_r5.jpg',
       features: [
         '45MP Full-Frame CMOS Sensor',
         '8K RAW Video',
@@ -322,7 +316,7 @@ class CameraItemsScreen extends StatelessWidget {
       description: '33MP full-frame hybrid camera',
       price: 95.0,
       rating: 4.7,
-      imageUrl: 'assets/placeholder_camera.jpg',
+      imageUrl: 'assets/cameras/sony_a7_iv.jpg',
       features: [
         '33MP Full-Frame Sensor',
         '4K 60p Video',
@@ -335,7 +329,7 @@ class CameraItemsScreen extends StatelessWidget {
       description: 'Professional standard zoom lens',
       price: 65.0,
       rating: 4.9,
-      imageUrl: 'assets/placeholder_lens.jpg',
+      imageUrl: 'assets/lenses/canon_rf_24_70mm.jpg',
       features: [
         'f/2.8 constant aperture',
         'Nano USM Motor',
@@ -355,8 +349,8 @@ class CameraItemsScreen extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: const LinearGradient(
                 colors: [
-                  Color(0xFF2C3E50),  // Dark blue-gray
-                  Color(0xFF4CA1AF),  // Teal
+                  Color(0xFF2C3E50),
+                  Color(0xFF4CA1AF),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -495,7 +489,7 @@ class CameraItemsScreen extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                          '\$${camera.price.toStringAsFixed(2)}/day',
+                          '₱${camera.price.toStringAsFixed(2)}/day',
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -646,7 +640,7 @@ class CameraItemsScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    '\$${camera.price.toStringAsFixed(2)} per day',
+                    '₱${camera.price.toStringAsFixed(2)} per day',
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -705,7 +699,7 @@ class BookingsScreen extends StatelessWidget {
       'date': '2023-12-15',
       'time': '14:00',
       'status': 'Confirmed',
-      'price': '\$299',
+      'price': '₱299',
       'location': 'Central Studio',
     },
     {
@@ -715,7 +709,7 @@ class BookingsScreen extends StatelessWidget {
       'date': '2024-01-20',
       'time': '10:00',
       'status': 'Pending',
-      'price': '\$899',
+      'price': '₱899',
       'location': 'Beach Resort',
     },
   ];
@@ -730,8 +724,8 @@ class BookingsScreen extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: const LinearGradient(
                 colors: [
-                  Color(0xFF2C3E50),  // Dark blue-gray
-                  Color(0xFF4CA1AF),  // Teal
+                  Color(0xFF2C3E50),
+                  Color(0xFF4CA1AF),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -911,13 +905,13 @@ class BookingsScreen extends StatelessWidget {
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
       case 'confirmed':
-        return const Color(0xFF4ECDC4);  // Teal
+        return const Color(0xFF4ECDC4);
       case 'pending':
-        return const Color(0xFFE6B325);  // Gold
+        return const Color(0xFFE6B325);
       case 'completed':
-        return const Color(0xFFA5D8FF);  // Light blue
+        return const Color(0xFFA5D8FF);
       case 'cancelled':
-        return const Color(0xFFFF6B6B);  // Coral
+        return const Color(0xFFFF6B6B);
       default:
         return Colors.grey;
     }
@@ -1183,8 +1177,8 @@ class ProfileScreen extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [
-                Color(0xFF2C3E50),  // Dark blue-gray
-                Color(0xFF4CA1AF),  // Teal
+                Color(0xFF2C3E50),
+                Color(0xFF4CA1AF),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -1201,7 +1195,7 @@ class ProfileScreen extends StatelessWidget {
           child: const Icon(
             Icons.person,
             size: 60,
-            color: Color.fromARGB(255, 0, 0, 0),
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 16),
@@ -1210,7 +1204,7 @@ class ProfileScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Color.fromARGB(255, 0, 0, 0),
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 4),
@@ -1407,7 +1401,7 @@ class ProfileScreen extends StatelessWidget {
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red.shade900,
-              foregroundColor: const Color.fromARGB(255, 142, 54, 54),
+              foregroundColor: Colors.white,
             ),
             child: const Text('Logout'),
           ),

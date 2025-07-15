@@ -4,10 +4,10 @@ class Camera {
   final String description;
   final double price;
   final double rating;
-  final String imageUrl;
+  final String imageUrl;  // This will point to your asset paths
   final List<String> features;
 
-  Camera({
+  const Camera({
     required this.id,
     required this.name,
     required this.description,
@@ -24,7 +24,7 @@ class Camera {
       description: json['description'],
       price: json['price'].toDouble(),
       rating: json['rating'].toDouble(),
-      imageUrl: json['imageUrl'],
+      imageUrl: 'assets/${json['imageUrl']}', // Prepend 'assets/' to JSON value
       features: List<String>.from(json['features']),
     );
   }
