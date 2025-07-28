@@ -74,8 +74,8 @@ class _HomeScreenState extends State<HomeScreen> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xFF121212),
-                Color(0xFF242424),
+                Color(0xFF000000),
+                Color(0xFF1A1A2E),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -87,11 +87,13 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFF121212),
-              Color(0xFF1E1E1E),
+              Color(0xFF0F0F1B),
+              Color(0xFF1A1A2E),
+              Color(0xFF16213E),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
+            stops: [0.1, 0.5, 0.9],
           ),
         ),
         child: _screens[_currentIndex],
@@ -100,12 +102,19 @@ class _HomeScreenState extends State<HomeScreen> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFF121212),
-              Color(0xFF242424),
+              Color(0xFF000000),
+              Color(0xFF1A1A2E),
             ],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black54,
+              blurRadius: 10,
+              spreadRadius: 2,
+            ),
+          ],
         ),
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
@@ -116,8 +125,9 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.transparent,
-          selectedItemColor: const Color(0xFFE6B325),
+          selectedItemColor: const Color(0xFF00D1FF),
           unselectedItemColor: Colors.grey,
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -162,9 +172,11 @@ class HomeContentScreen extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Color(0xFF121212),
-                        Color(0xFF1E1E1E),
+                        Color(0xFF0F0F1B),
+                        Color(0xFF1A1A2E),
+                        Color(0xFF16213E),
                       ],
+                      stops: [0.1, 0.5, 0.9],
                     ),
                   ),
                 ),
@@ -185,15 +197,15 @@ class HomeContentScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(30),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              blurRadius: 15,
-                              spreadRadius: 3,
+                              color: Colors.blueAccent.withOpacity(0.3),
+                              blurRadius: 20,
+                              spreadRadius: 5,
                             ),
                           ],
                           gradient: const LinearGradient(
                             colors: [
-                              Color(0xFF2C3E50),
-                              Color(0xFF4CA1AF),
+                              Color(0xFF00D1FF),
+                              Color(0xFF3A7BD5),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -243,7 +255,7 @@ class HomeContentScreen extends StatelessWidget {
                           _buildActionButton(
                             context,
                             'Explore Dashboard',
-                            const Color(0xFF4ECDC4),
+                            const Color(0xFF00D1FF),
                             '/dashboard',
                             Icons.dashboard,
                           ),
@@ -271,14 +283,14 @@ class HomeContentScreen extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          foregroundColor: Colors.black,
+          backgroundColor: color.withOpacity(0.8),
+          foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 14),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          elevation: 5,
-          shadowColor: Colors.black.withOpacity(0.3),
+          elevation: 8,
+          shadowColor: color.withOpacity(0.5),
         ),
         icon: Icon(icon, size: 18),
         label: Text(
@@ -349,8 +361,8 @@ class CameraItemsScreen extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: const LinearGradient(
                 colors: [
-                  Color(0xFF2C3E50),
-                  Color(0xFF4CA1AF),
+                  Color(0xFF00D1FF),
+                  Color(0xFF3A7BD5),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -358,8 +370,8 @@ class CameraItemsScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 10,
+                  color: Colors.blueAccent.withOpacity(0.3),
+                  blurRadius: 15,
                   offset: const Offset(0, 5),
                 ),
               ],
@@ -399,10 +411,10 @@ class CameraItemsScreen extends StatelessWidget {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
-                  borderSide: const BorderSide(color: Color(0xFFE6B325)),
+                  borderSide: const BorderSide(color: Color(0xFF00D1FF)),
                 ),
                 filled: true,
-                fillColor: const Color(0xFF242424),
+                fillColor: const Color(0xFF1A1A2E).withOpacity(0.8),
               ),
             ),
           ),
@@ -425,9 +437,13 @@ class CameraItemsScreen extends StatelessWidget {
     return Card(
       elevation: 4,
       margin: const EdgeInsets.symmetric(vertical: 8),
-      color: const Color(0xFF242424),
+      color: const Color(0xFF1A1A2E).withOpacity(0.8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: Colors.blueAccent.withOpacity(0.2),
+          width: 1,
+        ),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
@@ -444,10 +460,21 @@ class CameraItemsScreen extends StatelessWidget {
                 height: 100,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
-                  color: Colors.grey.shade800,
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xFF16213E),
+                      Color(0xFF1A1A2E),
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
                   image: const DecorationImage(
                     image: AssetImage('assets/placeholder_camera.jpg'),
                     fit: BoxFit.cover,
+                    colorFilter: ColorFilter.mode(
+                      Colors.blueAccent,
+                      BlendMode.overlay,
+                    ),
                   ),
                 ),
               ),
@@ -493,7 +520,7 @@ class CameraItemsScreen extends StatelessWidget {
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFFE6B325),
+                            color: Color(0xFF00D1FF),
                           ),
                         ),
                       ],
@@ -516,15 +543,19 @@ class CameraItemsScreen extends StatelessWidget {
       builder: (context) => Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: const Color(0xFF242424),
+          color: const Color(0xFF1A1A2E),
           borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 10,
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 20,
               spreadRadius: 5,
             ),
           ],
+          border: Border.all(
+            color: Colors.blueAccent.withOpacity(0.2),
+            width: 1,
+          ),
         ),
         child: SingleChildScrollView(
           child: Column(
@@ -537,7 +568,7 @@ class CameraItemsScreen extends StatelessWidget {
                   height: 4,
                   margin: const EdgeInsets.only(bottom: 16),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade600,
+                    color: Colors.blueAccent.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -565,10 +596,21 @@ class CameraItemsScreen extends StatelessWidget {
                   height: 150,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    color: Colors.grey.shade800,
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xFF16213E),
+                        Color(0xFF1A1A2E),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
                     image: const DecorationImage(
                       image: AssetImage('assets/placeholder_camera.jpg'),
                       fit: BoxFit.cover,
+                      colorFilter: ColorFilter.mode(
+                        Colors.blueAccent,
+                        BlendMode.overlay,
+                      ),
                     ),
                   ),
                 ),
@@ -592,7 +634,7 @@ class CameraItemsScreen extends StatelessWidget {
                             children: [
                               const Icon(
                                 Icons.check_circle,
-                                color: Color(0xFFE6B325),
+                                color: Color(0xFF00D1FF),
                                 size: 18,
                               ),
                               const SizedBox(width: 8),
@@ -617,8 +659,12 @@ class CameraItemsScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: const Color(0xFFE6B325).withOpacity(0.1),
+                      color: const Color(0xFF00D1FF).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(20),
+                      border: Border.all(
+                        color: const Color(0xFF00D1FF),
+                        width: 1,
+                      ),
                     ),
                     child: Row(
                       children: [
@@ -644,7 +690,7 @@ class CameraItemsScreen extends StatelessWidget {
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFFE6B325),
+                      color: Color(0xFF00D1FF),
                     ),
                   ),
                 ],
@@ -659,17 +705,18 @@ class CameraItemsScreen extends StatelessWidget {
                       SnackBar(
                         content: Text('${camera.name} added to cart'),
                         behavior: SnackBarBehavior.floating,
-                        backgroundColor: const Color(0xFFE6B325),
+                        backgroundColor: const Color(0xFF00D1FF),
                       ),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFE6B325),
+                    backgroundColor: const Color(0xFF00D1FF),
                     foregroundColor: Colors.black,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
+                    elevation: 5,
                   ),
                   child: const Text(
                     'Rent Now',
@@ -724,16 +771,16 @@ class BookingsScreen extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: const LinearGradient(
                 colors: [
-                  Color(0xFF2C3E50),
-                  Color(0xFF4CA1AF),
+                  Color(0xFF00D1FF),
+                  Color(0xFF3A7BD5),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 10,
+                  color: Colors.blueAccent.withOpacity(0.3),
+                  blurRadius: 15,
                   offset: const Offset(0, 5),
                 ),
               ],
@@ -758,13 +805,27 @@ class BookingsScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: bookings.length,
-              itemBuilder: (context, index) {
-                final booking = bookings[index];
-                return _buildBookingCard(booking, context);
-              },
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFF0F0F1B),
+                    Color(0xFF1A1A2E),
+                    Color(0xFF16213E),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [0.1, 0.5, 0.9],
+                ),
+              ),
+              child: ListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: bookings.length,
+                itemBuilder: (context, index) {
+                  final booking = bookings[index];
+                  return _buildBookingCard(booking, context);
+                },
+              ),
             ),
           ),
         ],
@@ -781,9 +842,13 @@ class BookingsScreen extends StatelessWidget {
       return Card(
         elevation: 3,
         margin: const EdgeInsets.only(bottom: 16),
-        color: const Color(0xFF242424),
+        color: const Color(0xFF1A1A2E).withOpacity(0.8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
+          side: BorderSide(
+            color: Colors.blueAccent.withOpacity(0.2),
+            width: 1,
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -839,14 +904,14 @@ class BookingsScreen extends StatelessWidget {
                       _showBookingActionDialog(context, 'Reschedule', booking['id']! as String);
                     },
                     style: OutlinedButton.styleFrom(
-                      side: const BorderSide(color: Color(0xFFE6B325)),
+                      side: const BorderSide(color: Color(0xFF00D1FF)),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
                     ),
                     child: const Text(
                       'Reschedule',
-                      style: TextStyle(color: Color(0xFFE6B325)),
+                      style: TextStyle(color: Color(0xFF00D1FF)),
                     ),
                   ),
                   ElevatedButton(
@@ -854,7 +919,7 @@ class BookingsScreen extends StatelessWidget {
                       _showBookingDetails(context, booking);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFE6B325),
+                      backgroundColor: const Color(0xFF00D1FF),
                       foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -870,7 +935,7 @@ class BookingsScreen extends StatelessWidget {
       );
     } catch (e) {
       return Card(
-        color: const Color(0xFF242424),
+        color: const Color(0xFF1A1A2E),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Text(
@@ -887,7 +952,7 @@ class BookingsScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: Colors.grey),
+          Icon(icon, size: 18, color: Colors.blueAccent),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
@@ -905,11 +970,11 @@ class BookingsScreen extends StatelessWidget {
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
       case 'confirmed':
-        return const Color(0xFF4ECDC4);
+        return const Color(0xFF00D1FF);
       case 'pending':
-        return const Color(0xFFE6B325);
+        return const Color(0xFFFFD700);
       case 'completed':
-        return const Color(0xFFA5D8FF);
+        return const Color(0xFF4ECDC4);
       case 'cancelled':
         return const Color(0xFFFF6B6B);
       default:
@@ -921,7 +986,7 @@ class BookingsScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF242424),
+        backgroundColor: const Color(0xFF1A1A2E),
         title: Text(
           '$action Booking #$bookingId',
           style: const TextStyle(color: Colors.white),
@@ -935,7 +1000,7 @@ class BookingsScreen extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             child: const Text(
               'Cancel',
-              style: TextStyle(color: Color(0xFFE6B325)),
+              style: TextStyle(color: Color(0xFF00D1FF)),
             ),
           ),
           ElevatedButton(
@@ -945,12 +1010,12 @@ class BookingsScreen extends StatelessWidget {
                 SnackBar(
                   content: Text('Booking #$bookingId $action request sent'),
                   behavior: SnackBarBehavior.floating,
-                  backgroundColor: const Color(0xFFE6B325),
+                  backgroundColor: const Color(0xFF00D1FF),
                 ),
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFE6B325),
+              backgroundColor: const Color(0xFF00D1FF),
               foregroundColor: Colors.black,
             ),
             child: Text(action),
@@ -972,15 +1037,19 @@ class BookingsScreen extends StatelessWidget {
         builder: (context) => Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: const Color(0xFF242424),
+            color: const Color(0xFF1A1A2E),
             borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.1),
-                blurRadius: 10,
+                color: Colors.black.withOpacity(0.3),
+                blurRadius: 20,
                 spreadRadius: 5,
               ),
             ],
+            border: Border.all(
+              color: Colors.blueAccent.withOpacity(0.2),
+              width: 1,
+            ),
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -993,7 +1062,7 @@ class BookingsScreen extends StatelessWidget {
                     height: 4,
                     margin: const EdgeInsets.only(bottom: 16),
                     decoration: BoxDecoration(
-                      color: Colors.grey.shade600,
+                      color: Colors.blueAccent.withOpacity(0.5),
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -1020,7 +1089,7 @@ class BookingsScreen extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: () => Navigator.pop(context),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFE6B325),
+                      backgroundColor: const Color(0xFF00D1FF),
                       foregroundColor: Colors.black,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                     ),
@@ -1037,7 +1106,7 @@ class BookingsScreen extends StatelessWidget {
         const SnackBar(
           content: Text('Error showing booking details'),
           behavior: SnackBarBehavior.floating,
-          backgroundColor: Color(0xFFE6B325),
+          backgroundColor: Color(0xFF00D1FF),
         ),
       );
     }
@@ -1052,7 +1121,7 @@ class BookingsScreen extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              color: Colors.grey.shade400,
+              color: Colors.blueAccent,
               fontSize: 14,
             ),
           ),
@@ -1177,8 +1246,8 @@ class ProfileScreen extends StatelessWidget {
           decoration: BoxDecoration(
             gradient: const LinearGradient(
               colors: [
-                Color(0xFF2C3E50),
-                Color(0xFF4CA1AF),
+                Color(0xFF00D1FF),
+                Color(0xFF3A7BD5),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -1186,8 +1255,8 @@ class ProfileScreen extends StatelessWidget {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
-                blurRadius: 10,
+                color: Colors.blueAccent.withOpacity(0.3),
+                blurRadius: 15,
                 offset: const Offset(0, 5),
               ),
             ],
@@ -1212,7 +1281,7 @@ class ProfileScreen extends StatelessWidget {
           'Premium Member',
           style: TextStyle(
             fontSize: 16,
-            color: Color(0xFFE6B325),
+            color: Color(0xFF00D1FF),
           ),
         ),
         const SizedBox(height: 8),
@@ -1240,9 +1309,13 @@ class ProfileScreen extends StatelessWidget {
   }) {
     return Card(
       elevation: 2,
-      color: const Color(0xFF242424),
+      color: const Color(0xFF1A1A2E).withOpacity(0.8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
+        side: BorderSide(
+          color: Colors.blueAccent.withOpacity(0.2),
+          width: 1,
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -1270,7 +1343,7 @@ class ProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          Icon(icon, color: const Color(0xFFE6B325), size: 24),
+          Icon(icon, color: const Color(0xFF00D1FF), size: 24),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -1313,7 +1386,7 @@ class ProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Row(
           children: [
-            Icon(icon, color: const Color(0xFFE6B325), size: 24),
+            Icon(icon, color: const Color(0xFF00D1FF), size: 24),
             const SizedBox(width: 16),
             Text(
               label,
@@ -1324,7 +1397,7 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            Icon(Icons.chevron_right, color: Colors.grey.shade400),
+            Icon(Icons.chevron_right, color: Colors.blueAccent.withOpacity(0.5)),
           ],
         ),
       ),
@@ -1341,7 +1414,7 @@ class ProfileScreen extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          Icon(icon, color: const Color(0xFFE6B325), size: 24),
+          Icon(icon, color: const Color(0xFF00D1FF), size: 24),
           const SizedBox(width: 16),
           Text(
             label,
@@ -1355,7 +1428,8 @@ class ProfileScreen extends StatelessWidget {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: const Color(0xFFE6B325),
+            activeColor: const Color(0xFF00D1FF),
+            activeTrackColor: const Color(0xFF00D1FF).withOpacity(0.5),
           ),
         ],
       ),
@@ -1367,7 +1441,7 @@ class ProfileScreen extends StatelessWidget {
       SnackBar(
         content: Text(message),
         behavior: SnackBarBehavior.floating,
-        backgroundColor: const Color(0xFFE6B325),
+        backgroundColor: const Color(0xFF00D1FF),
         duration: const Duration(seconds: 2),
       ),
     );
@@ -1377,7 +1451,7 @@ class ProfileScreen extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF242424),
+        backgroundColor: const Color(0xFF1A1A2E),
         title: const Text(
           'Logout',
           style: TextStyle(color: Colors.white),
@@ -1391,7 +1465,7 @@ class ProfileScreen extends StatelessWidget {
             onPressed: () => Navigator.pop(context),
             child: const Text(
               'Cancel',
-              style: TextStyle(color: Color(0xFFE6B325)),
+              style: TextStyle(color: Color(0xFF00D1FF)),
             ),
           ),
           ElevatedButton(
