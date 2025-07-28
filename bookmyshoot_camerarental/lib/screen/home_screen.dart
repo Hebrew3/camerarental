@@ -305,17 +305,22 @@ class HomeContentScreen extends StatelessWidget {
   }
 }
 
-class CameraItemsScreen extends StatelessWidget {
+class CameraItemsScreen extends StatefulWidget {
   const CameraItemsScreen({super.key});
 
-  final List<Camera> cameras = const [
+  @override
+  State<CameraItemsScreen> createState() => _CameraItemsScreenState();
+}
+
+class _CameraItemsScreenState extends State<CameraItemsScreen> {
+  final List<Camera> _allCameras = const [
     Camera(
       id: 'cam1',
       name: 'Canon EOS R5',
       description: 'Professional mirrorless camera',
       price: 120.0,
       rating: 4.8,
-      imageUrl: 'assets/cameras/canon_eos_r5.jpg',
+      imageUrl: 'https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg',
       features: [
         '45MP Full-Frame CMOS Sensor',
         '8K RAW Video',
@@ -328,7 +333,7 @@ class CameraItemsScreen extends StatelessWidget {
       description: '33MP full-frame hybrid camera',
       price: 95.0,
       rating: 4.7,
-      imageUrl: 'assets/cameras/sony_a7_iv.jpg',
+      imageUrl: 'https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg',
       features: [
         '33MP Full-Frame Sensor',
         '4K 60p Video',
@@ -336,19 +341,166 @@ class CameraItemsScreen extends StatelessWidget {
       ],
     ),
     Camera(
+      id: 'cam3',
+      name: 'Nikon Z7 II',
+      description: 'High-resolution mirrorless camera',
+      price: 110.0,
+      rating: 4.6,
+      imageUrl: 'https://images.pexels.com/photos/225157/pexels-photo-225157.jpeg',
+      features: [
+        '45.7MP Full-Frame Sensor',
+        '4K UHD Video',
+        'Dual EXPEED 6 Processors'
+      ],
+    ),
+    Camera(
+      id: 'cam4',
+      name: 'Fujifilm X-T4',
+      description: 'APS-C mirrorless camera',
+      price: 85.0,
+      rating: 4.5,
+      imageUrl: 'https://images.pexels.com/photos/1034662/pexels-photo-1034662.jpeg',
+      features: [
+        '26.1MP X-Trans CMOS 4 Sensor',
+        'In-body Image Stabilization',
+        '4K/60p Video'
+      ],
+    ),
+    Camera(
       id: 'lens1',
-      name: 'Canon RF 24-70mm',
+      name: 'Canon RF 24-70mm f/2.8',
       description: 'Professional standard zoom lens',
       price: 65.0,
       rating: 4.9,
-      imageUrl: 'assets/lenses/canon_rf_24_70mm.jpg',
+      imageUrl: 'https://images.pexels.com/photos/301703/pexels-photo-301703.jpeg',
       features: [
         'f/2.8 constant aperture',
         'Nano USM Motor',
         'Weather Sealed'
       ],
     ),
+    Camera(
+      id: 'lens2',
+      name: 'Sony FE 70-200mm f/2.8 GM',
+      description: 'Professional telephoto zoom lens',
+      price: 85.0,
+      rating: 4.8,
+      imageUrl: 'https://images.pexels.com/photos/122400/pexels-photo-122400.jpeg',
+      features: [
+        'f/2.8 constant aperture',
+        'Optical SteadyShot',
+        'Fast AF'
+      ],
+    ),
+    Camera(
+      id: 'lens3',
+      name: 'Sigma 35mm f/1.4 Art',
+      description: 'Premium prime lens',
+      price: 55.0,
+      rating: 4.7,
+      imageUrl: 'https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg',
+      features: [
+        'f/1.4 maximum aperture',
+        'Excellent low-light performance',
+        'Art-series optical quality'
+      ],
+    ),
+    Camera(
+      id: 'lens4',
+      name: 'Tamron 28-75mm f/2.8',
+      description: 'Lightweight standard zoom',
+      price: 50.0,
+      rating: 4.6,
+      imageUrl: 'https://images.pexels.com/photos/274973/pexels-photo-274973.jpeg',
+      features: [
+        'f/2.8 constant aperture',
+        'Compact and lightweight',
+        'Moisture-resistant construction'
+      ],
+    ),
+    Camera(
+      id: 'acc1',
+      name: 'Manfrotto Tripod',
+      description: 'Professional camera tripod',
+      price: 45.0,
+      rating: 4.5,
+      imageUrl: 'https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg',
+      features: [
+        'Carbon fiber',
+        'Max height 160cm',
+        'Load capacity 8kg'
+      ],
+    ),
+    Camera(
+      id: 'acc2',
+      name: 'Godox V1 Flash',
+      description: 'Round-head speedlight',
+      price: 40.0,
+      rating: 4.4,
+      imageUrl: 'https://images.pexels.com/photos/269923/pexels-photo-269923.jpeg',
+      features: [
+        'Round head for soft shadows',
+        'Li-ion battery',
+        '2.4G wireless system'
+      ],
+    ),
+    Camera(
+      id: 'acc3',
+      name: 'Peak Design Camera Strap',
+      description: 'Premium camera strap',
+      price: 25.0,
+      rating: 4.8,
+      imageUrl: 'https://images.pexels.com/photos/60628/pexels-photo-60628.jpeg',
+      features: [
+        'Quick-adjust system',
+        'Weatherproof materials',
+        'Multiple carrying positions'
+      ],
+    ),
+    Camera(
+      id: 'acc4',
+      name: 'SanDisk Extreme Pro SD Card',
+      description: 'High-speed memory card',
+      price: 30.0,
+      rating: 4.7,
+      imageUrl: 'https://images.pexels.com/photos/2587370/pexels-photo-2587370.jpeg',
+      features: [
+        '170MB/s read speed',
+        '128GB capacity',
+        'Shock and water resistant'
+      ],
+    ),
   ];
+
+  List<Camera> _filteredCameras = [];
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _filteredCameras = _allCameras;
+    _searchController.addListener(_filterCameras);
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterCameras() {
+    final query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredCameras = _allCameras.where((camera) {
+        final nameMatch = camera.name.toLowerCase().contains(query);
+        final descMatch = camera.description.toLowerCase().contains(query);
+        final featuresMatch = camera.features.any(
+          (feature) => feature.toLowerCase().contains(query),
+        );
+        return nameMatch || descMatch || featuresMatch;
+      }).toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -396,11 +548,21 @@ class CameraItemsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: TextField(
+              controller: _searchController,
               style: const TextStyle(color: Colors.white),
               decoration: InputDecoration(
                 hintText: 'Search equipment...',
                 hintStyle: const TextStyle(color: Colors.grey),
                 prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                suffixIcon: _searchController.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear, color: Colors.grey),
+                        onPressed: () {
+                          _searchController.clear();
+                          _filterCameras();
+                        },
+                      )
+                    : null,
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.grey),
@@ -420,13 +582,20 @@ class CameraItemsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Expanded(
-            child: ListView.builder(
-              itemCount: cameras.length,
-              itemBuilder: (context, index) {
-                final camera = cameras[index];
-                return _buildCameraCard(camera, context);
-              },
-            ),
+            child: _filteredCameras.isEmpty
+                ? const Center(
+                    child: Text(
+                      'No cameras found',
+                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: _filteredCameras.length,
+                    itemBuilder: (context, index) {
+                      final camera = _filteredCameras[index];
+                      return _buildCameraCard(camera, context);
+                    },
+                  ),
           ),
         ],
       ),
