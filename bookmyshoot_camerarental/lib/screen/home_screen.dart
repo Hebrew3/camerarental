@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme.dart';
+import '../providers/theme_provider.dart';
 
 void main() {
   runApp(const BookMyShootApp());
@@ -73,10 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xFF000000),
-                Color(0xFF1A1A2E),
-              ],
+              colors: CinematicColors.primaryGradient,
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
@@ -86,11 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF0F0F1B),
-              Color(0xFF1A1A2E),
-              Color(0xFF16213E),
-            ],
+            colors: CinematicColors.cinematicGradient,
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             stops: [0.1, 0.5, 0.9],
@@ -99,18 +95,15 @@ class _HomeScreenState extends State<HomeScreen> {
         child: _screens[_currentIndex],
       ),
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF000000),
-              Color(0xFF1A1A2E),
-            ],
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: CinematicColors.primaryGradient,
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black54,
+              color: CinematicColors.primary.withOpacity(0.5),
               blurRadius: 10,
               spreadRadius: 2,
             ),
@@ -125,8 +118,8 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.transparent,
-          selectedItemColor: const Color(0xFF00D1FF),
-          unselectedItemColor: Colors.grey,
+          selectedItemColor: CinematicColors.secondary,
+          unselectedItemColor: CinematicColors.onSurface,
           selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
           items: const [
             BottomNavigationBarItem(
@@ -171,11 +164,7 @@ class HomeContentScreen extends StatelessWidget {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFF0F0F1B),
-                        Color(0xFF1A1A2E),
-                        Color(0xFF16213E),
-                      ],
+                      colors: CinematicColors.cinematicGradient,
                       stops: [0.1, 0.5, 0.9],
                     ),
                   ),
@@ -211,7 +200,7 @@ class HomeContentScreen extends StatelessWidget {
                             end: Alignment.bottomRight,
                           ),
                           image: const DecorationImage(
-                            image: AssetImage('assets/placeholder_logo.png'),
+                            image: AssetImage('assets/logo.png'),
                             fit: BoxFit.contain,
                           ),
                         ),
@@ -320,7 +309,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: 'Professional mirrorless camera',
       price: 120.0,
       rating: 4.8,
-      imageUrl: 'https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg',
+      imageUrl: 'assets/canon_eos_r5.jpg',
       features: [
         '45MP Full-Frame CMOS Sensor',
         '8K RAW Video',
@@ -333,7 +322,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: '33MP full-frame hybrid camera',
       price: 95.0,
       rating: 4.7,
-      imageUrl: 'https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg',
+      imageUrl: 'assets/sony_a7_iv.jpg',
       features: [
         '33MP Full-Frame Sensor',
         '4K 60p Video',
@@ -346,7 +335,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: 'High-resolution mirrorless camera',
       price: 110.0,
       rating: 4.6,
-      imageUrl: 'https://images.pexels.com/photos/225157/pexels-photo-225157.jpeg',
+      imageUrl: 'assets/logo.png',
       features: [
         '45.7MP Full-Frame Sensor',
         '4K UHD Video',
@@ -359,7 +348,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: 'APS-C mirrorless camera',
       price: 85.0,
       rating: 4.5,
-      imageUrl: 'https://images.pexels.com/photos/1034662/pexels-photo-1034662.jpeg',
+      imageUrl: 'assets/logo.png',
       features: [
         '26.1MP X-Trans CMOS 4 Sensor',
         'In-body Image Stabilization',
@@ -372,7 +361,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: 'Professional standard zoom lens',
       price: 65.0,
       rating: 4.9,
-      imageUrl: 'https://images.pexels.com/photos/301703/pexels-photo-301703.jpeg',
+      imageUrl: 'assets/canon_rf_24_70mm.jpg',
       features: [
         'f/2.8 constant aperture',
         'Nano USM Motor',
@@ -385,7 +374,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: 'Professional telephoto zoom lens',
       price: 85.0,
       rating: 4.8,
-      imageUrl: 'https://images.pexels.com/photos/122400/pexels-photo-122400.jpeg',
+      imageUrl: 'assets/logo.png',
       features: [
         'f/2.8 constant aperture',
         'Optical SteadyShot',
@@ -398,7 +387,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: 'Premium prime lens',
       price: 55.0,
       rating: 4.7,
-      imageUrl: 'https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg',
+      imageUrl: 'assets/logo.png',
       features: [
         'f/1.4 maximum aperture',
         'Excellent low-light performance',
@@ -411,7 +400,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: 'Lightweight standard zoom',
       price: 50.0,
       rating: 4.6,
-      imageUrl: 'https://images.pexels.com/photos/274973/pexels-photo-274973.jpeg',
+      imageUrl: 'assets/logo.png',
       features: [
         'f/2.8 constant aperture',
         'Compact and lightweight',
@@ -424,7 +413,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: 'Professional camera tripod',
       price: 45.0,
       rating: 4.5,
-      imageUrl: 'https://images.pexels.com/photos/1595385/pexels-photo-1595385.jpeg',
+      imageUrl: 'assets/logo.png',
       features: [
         'Carbon fiber',
         'Max height 160cm',
@@ -437,7 +426,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: 'Round-head speedlight',
       price: 40.0,
       rating: 4.4,
-      imageUrl: 'https://images.pexels.com/photos/269923/pexels-photo-269923.jpeg',
+      imageUrl: 'assets/logo.png',
       features: [
         'Round head for soft shadows',
         'Li-ion battery',
@@ -450,7 +439,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: 'Premium camera strap',
       price: 25.0,
       rating: 4.8,
-      imageUrl: 'https://images.pexels.com/photos/60628/pexels-photo-60628.jpeg',
+      imageUrl: 'assets/logo.png',
       features: [
         'Quick-adjust system',
         'Weatherproof materials',
@@ -463,7 +452,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: 'High-speed memory card',
       price: 30.0,
       rating: 4.7,
-      imageUrl: 'https://images.pexels.com/photos/2587370/pexels-photo-2587370.jpeg',
+      imageUrl: 'assets/logo.png',
       features: [
         '170MB/s read speed',
         '128GB capacity',
@@ -508,42 +497,6 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [
-                  Color(0xFF00D1FF),
-                  Color(0xFF3A7BD5),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.blueAccent.withOpacity(0.3),
-                  blurRadius: 15,
-                  offset: const Offset(0, 5),
-                ),
-              ],
-            ),
-            child: const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.camera_alt, size: 40, color: Colors.white),
-                SizedBox(width: 16),
-                Text(
-                  'Camera Equipment',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
           const SizedBox(height: 16),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -637,13 +590,31 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
-                  image: const DecorationImage(
-                    image: AssetImage('assets/placeholder_camera.jpg'),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.asset(
+                    camera.imageUrl,
                     fit: BoxFit.cover,
-                    colorFilter: ColorFilter.mode(
-                      Colors.blueAccent,
-                      BlendMode.overlay,
-                    ),
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            colors: [
+                              Color(0xFF16213E),
+                              Color(0xFF1A1A2E),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.camera_alt,
+                          color: Colors.blueAccent,
+                          size: 40,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
@@ -773,13 +744,31 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                     ),
-                    image: const DecorationImage(
-                      image: AssetImage('assets/placeholder_camera.jpg'),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset(
+                      camera.imageUrl,
                       fit: BoxFit.cover,
-                      colorFilter: ColorFilter.mode(
-                        Colors.blueAccent,
-                        BlendMode.overlay,
-                      ),
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color(0xFF16213E),
+                                Color(0xFF1A1A2E),
+                              ],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                            ),
+                          ),
+                          child: const Icon(
+                            Icons.camera_alt,
+                            color: Colors.blueAccent,
+                            size: 60,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -910,7 +899,7 @@ class BookingsScreen extends StatelessWidget {
   final List<Map<String, dynamic>> bookings = const [
     {
       'id': 'BK001',
-      'photographer': 'Sarah Johnson',
+      'photographer': 'Daniel',
       'package': 'Premium Portrait',
       'date': '2023-12-15',
       'time': '14:00',
@@ -920,7 +909,7 @@ class BookingsScreen extends StatelessWidget {
     },
     {
       'id': 'BK002',
-      'photographer': 'Mike Chen',
+      'photographer': 'Zilong',
       'package': 'Wedding Package',
       'date': '2024-01-20',
       'time': '10:00',
@@ -1309,104 +1298,133 @@ class BookingsScreen extends StatelessWidget {
   }
 }
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+
+  @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.isDarkMode;
+    
     return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            _buildProfileHeader(),
-            const SizedBox(height: 24),
-            _buildProfileSection(
-              title: 'Personal Information',
-              children: [
-                _buildProfileItem(Icons.person, 'Name', 'Daniel De Asis'),
-                _buildProfileItem(Icons.email, 'Email', 'danieldeasis@gmail.com'),
-                _buildProfileItem(Icons.phone, 'Phone', '9320123456'),
-                _buildProfileItem(Icons.cake, 'Date of Birth', 'January 23, 1990'),
-              ],
-            ),
-            const SizedBox(height: 16),
-            _buildProfileSection(
-              title: 'Account Settings',
-              children: [
-                _buildProfileActionItem(
-                  context,
-                  Icons.lock,
-                  'Change Password',
-                  () {
-                    _showSnackbar(context, 'Change Password clicked');
-                  },
-                ),
-                _buildProfileActionItem(
-                  context,
-                  Icons.notifications,
-                  'Notification Settings',
-                  () {
-                    _showSnackbar(context, 'Notification Settings clicked');
-                  },
-                ),
-                _buildProfileActionItem(
-                  context,
-                  Icons.payment,
-                  'Payment Methods',
-                  () {
-                    _showSnackbar(context, 'Payment Methods clicked');
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 16),
-            _buildProfileSection(
-              title: 'Preferences',
-              children: [
-                _buildProfileSwitchItem(
-                  Icons.dark_mode,
-                  'Dark Mode',
-                  false,
-                  (value) {
-                    _showSnackbar(context, 'Dark Mode ${value ? 'enabled' : 'disabled'}');
-                  },
-                ),
-                _buildProfileSwitchItem(
-                  Icons.location_on,
-                  'Location Services',
-                  true,
-                  (value) {
-                    _showSnackbar(context, 'Location Services ${value ? 'enabled' : 'disabled'}');
-                  },
-                ),
-              ],
-            ),
-            const SizedBox(height: 24),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  _showLogoutDialog(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red.shade900,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: const Text('Logout'),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: isDarkMode 
+                ? CinematicColors.cinematicGradient 
+                : CinematicColors.lightCinematicGradient,
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              _buildProfileHeader(isDarkMode),
+              const SizedBox(height: 24),
+              _buildProfileSection(
+                title: 'Personal Information',
+                children: [
+                  _buildProfileItem(Icons.person, 'Name', 'Daniel De Asis', isDarkMode),
+                  _buildProfileItem(Icons.email, 'Email', 'danieldeasis@gmail.com', isDarkMode),
+                  _buildProfileItem(Icons.phone, 'Phone', '9320123456', isDarkMode),
+                  _buildProfileItem(Icons.cake, 'Date of Birth', 'January 23, 1990', isDarkMode),
+                ],
+                isDarkMode: isDarkMode,
               ),
-            ),
-          ],
+              const SizedBox(height: 16),
+              _buildProfileSection(
+                title: 'Account Settings',
+                children: [
+                  _buildProfileActionItem(
+                    context,
+                    Icons.lock,
+                    'Change Password',
+                    () {
+                      _showSnackbar(context, 'Change Password clicked');
+                    },
+                    isDarkMode,
+                  ),
+                  _buildProfileActionItem(
+                    context,
+                    Icons.notifications,
+                    'Notification Settings',
+                    () {
+                      _showSnackbar(context, 'Notification Settings clicked');
+                    },
+                    isDarkMode,
+                  ),
+                  _buildProfileActionItem(
+                    context,
+                    Icons.payment,
+                    'Payment Methods',
+                    () {
+                      _showSnackbar(context, 'Payment Methods clicked');
+                    },
+                    isDarkMode,
+                  ),
+                ],
+                isDarkMode: isDarkMode,
+              ),
+              const SizedBox(height: 16),
+              _buildProfileSection(
+                title: 'Preferences',
+                children: [
+                  _buildProfileSwitchItem(
+                    Icons.dark_mode,
+                    'Dark Mode',
+                    isDarkMode,
+                    (value) {
+                      themeProvider.toggleTheme();
+                      _showSnackbar(context, 'Dark Mode ${value ? 'enabled' : 'disabled'}');
+                    },
+                    isDarkMode,
+                  ),
+                  _buildProfileSwitchItem(
+                    Icons.location_on,
+                    'Location Services',
+                    true,
+                    (value) {
+                      _showSnackbar(context, 'Location Services ${value ? 'enabled' : 'disabled'}');
+                    },
+                    isDarkMode,
+                  ),
+                ],
+                isDarkMode: isDarkMode,
+              ),
+              const SizedBox(height: 24),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _showLogoutDialog(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red.shade900,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: const Text('Logout'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildProfileHeader() {
+  Widget _buildProfileHeader(bool isDarkMode) {
     return Column(
       children: [
         Container(
@@ -1475,14 +1493,19 @@ class ProfileScreen extends StatelessWidget {
   Widget _buildProfileSection({
     required String title,
     required List<Widget> children,
+    required bool isDarkMode,
   }) {
     return Card(
       elevation: 2,
-      color: const Color(0xFF1A1A2E).withOpacity(0.8),
+      color: isDarkMode 
+          ? const Color(0xFF1A1A2E).withOpacity(0.8)
+          : const Color(0xFFFFFFFF).withOpacity(0.9),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: Colors.blueAccent.withOpacity(0.2),
+          color: isDarkMode 
+              ? Colors.blueAccent.withOpacity(0.2)
+              : CinematicColors.lightPrimary.withOpacity(0.2),
           width: 1,
         ),
       ),
@@ -1493,10 +1516,10 @@ class ProfileScreen extends StatelessWidget {
           children: [
             Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: isDarkMode ? Colors.white : CinematicColors.lightOnSurface,
               ),
             ),
             const SizedBox(height: 12),
@@ -1507,12 +1530,12 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProfileItem(IconData icon, String label, String value) {
+  Widget _buildProfileItem(IconData icon, String label, String value, bool isDarkMode) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          Icon(icon, color: const Color(0xFF00D1FF), size: 24),
+          Icon(icon, color: isDarkMode ? const Color(0xFF00D1FF) : CinematicColors.lightSecondary, size: 24),
           const SizedBox(width: 16),
           Expanded(
             child: Column(
@@ -1520,18 +1543,18 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
-                    color: Colors.grey,
+                    color: isDarkMode ? Colors.grey : Colors.grey[600],
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   value,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: Colors.white,
+                    color: isDarkMode ? Colors.white : CinematicColors.lightOnSurface,
                   ),
                 ),
               ],
@@ -1547,6 +1570,7 @@ class ProfileScreen extends StatelessWidget {
     IconData icon,
     String label,
     VoidCallback onTap,
+    bool isDarkMode,
   ) {
     return InkWell(
       onTap: onTap,
@@ -1555,18 +1579,18 @@ class ProfileScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12.0),
         child: Row(
           children: [
-            Icon(icon, color: const Color(0xFF00D1FF), size: 24),
+            Icon(icon, color: isDarkMode ? const Color(0xFF00D1FF) : CinematicColors.lightSecondary, size: 24),
             const SizedBox(width: 16),
             Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
-                color: Colors.white,
+                color: isDarkMode ? Colors.white : CinematicColors.lightOnSurface,
               ),
             ),
             const Spacer(),
-            Icon(Icons.chevron_right, color: Colors.blueAccent.withOpacity(0.5)),
+            Icon(Icons.chevron_right, color: isDarkMode ? Colors.blueAccent.withOpacity(0.5) : CinematicColors.lightPrimary.withOpacity(0.5)),
           ],
         ),
       ),
@@ -1578,27 +1602,28 @@ class ProfileScreen extends StatelessWidget {
     String label,
     bool value,
     Function(bool) onChanged,
+    bool isDarkMode,
   ) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          Icon(icon, color: const Color(0xFF00D1FF), size: 24),
+          Icon(icon, color: isDarkMode ? const Color(0xFF00D1FF) : CinematicColors.lightSecondary, size: 24),
           const SizedBox(width: 16),
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
-              color: Colors.white,
+              color: isDarkMode ? Colors.white : CinematicColors.lightOnSurface,
             ),
           ),
           const Spacer(),
           Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: const Color(0xFF00D1FF),
-            activeTrackColor: const Color(0xFF00D1FF).withOpacity(0.5),
+            activeColor: isDarkMode ? const Color(0xFF00D1FF) : CinematicColors.lightSecondary,
+            activeTrackColor: isDarkMode ? const Color(0xFF00D1FF).withOpacity(0.5) : CinematicColors.lightSecondary.withOpacity(0.5),
           ),
         ],
       ),
@@ -1617,24 +1642,27 @@ class ProfileScreen extends StatelessWidget {
   }
 
   void _showLogoutDialog(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+    final isDarkMode = themeProvider.isDarkMode;
+    
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF1A1A2E),
-        title: const Text(
+        backgroundColor: isDarkMode ? const Color(0xFF1A1A2E) : CinematicColors.lightSurface,
+        title: Text(
           'Logout',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: isDarkMode ? Colors.white : CinematicColors.lightOnSurface),
         ),
-        content: const Text(
+        content: Text(
           'Are you sure you want to logout?',
-          style: TextStyle(color: Colors.grey),
+          style: TextStyle(color: isDarkMode ? Colors.grey : Colors.grey[600]),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text(
+            child: Text(
               'Cancel',
-              style: TextStyle(color: Color(0xFF00D1FF)),
+              style: TextStyle(color: isDarkMode ? const Color(0xFF00D1FF) : CinematicColors.lightSecondary),
             ),
           ),
           ElevatedButton(

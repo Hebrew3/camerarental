@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:bookmyshoot_camerarental/screen/home_screen.dart';
 import 'package:bookmyshoot_camerarental/screen/dashboard.dart';
-import 'package:bookmyshoot_camerarental/screen/rent_equipment_screen.dart'; // Add this import
+import 'package:bookmyshoot_camerarental/screen/rent_equipment_screen.dart';
 import 'package:bookmyshoot_camerarental/utils/theme.dart';
+import 'package:bookmyshoot_camerarental/providers/theme_provider.dart';
 
 void main() {
   runApp(const BookMyShootApp());
@@ -13,17 +15,24 @@ class BookMyShootApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'BookMyShoot',
-      theme: appTheme,
-      initialRoute: Routes.home,
-      onGenerateRoute: RouteGenerator.generateRoute,
-      debugShowCheckedModeBanner: false,
-      routes: {
-        Routes.home: (context) => const HomeScreen(),
-        Routes.dashboard: (context) => const DashboardScreen(),
-        Routes.rent: (context) => const RentEquipmentScreen(), // Add this route
-      },
+    return ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) {
+          return MaterialApp(
+            title: 'BookMyShoot',
+            theme: themeProvider.isDarkMode ? appTheme : lightAppTheme,
+            initialRoute: Routes.home,
+            onGenerateRoute: RouteGenerator.generateRoute,
+            debugShowCheckedModeBanner: false,
+            routes: {
+              Routes.home: (context) => const HomeScreen(),
+              Routes.dashboard: (context) => const DashboardScreen(),
+              Routes.rent: (context) => const RentEquipmentScreen(),
+            },
+          );
+        },
+      ),
     );
   }
 }

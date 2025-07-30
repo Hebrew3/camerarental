@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.18.1  # Add this line (use the latest version)
+  shared_preferences: ^2.2.2  # For theme persistence
+  provider: ^6.1.1  # For state management
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -68,10 +70,11 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-assets:
-  - assets/cameras/canon_eos_r5.jpg
-  - assets/cameras/sony_a7_iv.jpg
-  - assets/lenses/canon_rf_24_70mm.jpg
+  assets:
+    - assets/logo.png
+    - assets/canon_eos_r5.jpg
+    - assets/sony_a7_iv.jpg
+    - assets/canon_rf_24_70mm.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

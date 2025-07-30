@@ -1,7 +1,271 @@
 import 'package:flutter/material.dart';
+import '../utils/theme.dart';
+import '../services/booking_service.dart';
+import '../models/booking_model.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
+
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
+  final BookingService _bookingService = BookingService();
+  List<Booking> _recentBookings = [];
+  Map<String, dynamic> _stats = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _loadDashboardData();
+  }
+
+  void _loadDashboardData() {
+    setState(() {
+      _recentBookings = _bookingService.getRecentBookings(limit: 10);
+      _stats = _bookingService.getBookingStats();
+    });
+  }
+
+  void _refreshDashboard() {
+    _loadDashboardData();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Dashboard refreshed!'),
+        backgroundColor: CinematicColors.success,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+    );
+  }
+
+  void _showBookingDetails(Booking booking) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: CinematicColors.surface,
+        title: Text(
+          'Booking Details',
+          style: const TextStyle(color: CinematicColors.onSurface),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildDetailRow('Customer', booking.customerName),
+            _buildDetailRow('Equipment', booking.equipment.name),
+            _buildDetailRow('Date & Time', booking.formattedDate),
+            _buildDetailRow('Price', booking.formattedPrice),
+            _buildDetailRow('Status', booking.status),
+            if (booking.isOverdue) ...[
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: CinematicColors.error.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.warning,
+                      color: CinematicColors.error,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'This booking is overdue',
+                      style: const TextStyle(
+                        color: CinematicColors.error,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              'Close',
+              style: TextStyle(color: CinematicColors.secondary),
+            ),
+          ),
+          if (booking.status == 'Pending')
+            TextButton(
+              onPressed: () {
+                _updateBookingStatus(booking.id, 'Confirmed');
+                Navigator.pop(context);
+              },
+              child: const Text(
+                'Confirm',
+                style: TextStyle(color: CinematicColors.success),
+              ),
+            ),
+          if (booking.isActive)
+            TextButton(
+              onPressed: () {
+                _updateBookingStatus(booking.id, 'Completed');
+                Navigator.pop(context);
+              },
+              child: const Text(
+                'Complete',
+                style: TextStyle(color: CinematicColors.accent),
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDetailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 80,
+            child: Text(
+              '$label:',
+              style: const TextStyle(
+                color: CinematicColors.onSurface,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text(
+              value,
+              style: const TextStyle(color: CinematicColors.onSurface),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _updateBookingStatus(String bookingId, String newStatus) {
+    if (_bookingService.updateBookingStatus(bookingId, newStatus)) {
+      _loadDashboardData();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Booking status updated to $newStatus'),
+          backgroundColor: CinematicColors.success,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Failed to update booking status'),
+          backgroundColor: CinematicColors.error,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        ),
+      );
+    }
+  }
+
+  void _showValidationSummary() {
+    final overdueBookings = _bookingService.getOverdueBookings();
+    final pendingBookings = _bookingService.getBookingsByStatus('Pending');
+    
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: CinematicColors.surface,
+        title: const Text(
+          'Validation Summary',
+          style: TextStyle(color: CinematicColors.onSurface),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            if (overdueBookings.isNotEmpty) ...[
+              _buildValidationItem(
+                'Overdue Bookings',
+                overdueBookings.length.toString(),
+                CinematicColors.error,
+                Icons.warning,
+              ),
+              const SizedBox(height: 8),
+            ],
+            if (pendingBookings.isNotEmpty) ...[
+              _buildValidationItem(
+                'Pending Bookings',
+                pendingBookings.length.toString(),
+                CinematicColors.warning,
+                Icons.pending,
+              ),
+              const SizedBox(height: 8),
+            ],
+            if (overdueBookings.isEmpty && pendingBookings.isEmpty) ...[
+              _buildValidationItem(
+                'All Good!',
+                'No issues found',
+                CinematicColors.success,
+                Icons.check_circle,
+              ),
+            ],
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              'OK',
+              style: TextStyle(color: CinematicColors.secondary),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildValidationItem(String label, String value, Color color, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.3)),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: color, size: 20),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(
+                    color: color,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  value,
+                  style: TextStyle(
+                    color: color.withOpacity(0.8),
+                    fontSize: 12,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +281,23 @@ class DashboardScreen extends StatelessWidget {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xFF121212),  // Dark background
-                Color(0xFF242424),  // Slightly lighter dark
-              ],
+              colors: CinematicColors.primaryGradient,
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
           ),
         ),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh, color: Colors.white),
+            onPressed: _refreshDashboard,
+            tooltip: 'Refresh Dashboard',
+          ),
+          IconButton(
+            icon: const Icon(Icons.verified, color: Colors.white),
+            onPressed: _showValidationSummary,
+            tooltip: 'Validation Summary',
+          ),
           IconButton(
             icon: const Icon(Icons.notifications, color: Colors.white),
             onPressed: () {},
@@ -36,10 +307,7 @@ class DashboardScreen extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF121212),  // Dark background
-              Color(0xFF1E1E1E),  // Slightly lighter dark
-            ],
+            colors: CinematicColors.cinematicGradient,
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -53,13 +321,25 @@ class DashboardScreen extends StatelessWidget {
               _buildStatsRow(),
               const SizedBox(height: 24),
               // Recent bookings title
-              const Text(
-                'Recent Bookings',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,  // White text for better contrast
-                ),
+              Row(
+                children: [
+                  const Text(
+                    'Recent Bookings',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    '${_recentBookings.length} bookings',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Colors.grey[400],
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
               // Bookings list
@@ -71,8 +351,11 @@ class DashboardScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.pushNamed(context, '/rent'),
-        backgroundColor: const Color(0xFFE6B325),  // Gold accent color
+        onPressed: () async {
+          await Navigator.pushNamed(context, '/rent');
+          _loadDashboardData(); // Refresh after returning from booking creation
+        },
+        backgroundColor: CinematicColors.secondary,
         child: const Icon(Icons.add, color: Colors.black),
       ),
     );
@@ -85,27 +368,27 @@ class DashboardScreen extends StatelessWidget {
         Expanded(
           child: _StatCard(
             title: 'Total Bookings',
-            value: '24',
+            value: (_stats['totalBookings'] ?? 0).toString(),
             icon: Icons.calendar_today,
-            color: const Color(0xFFE6B325),  // Gold
+            color: CinematicColors.secondary,
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: _StatCard(
             title: 'Active Rentals',
-            value: '5',
+            value: (_stats['activeBookings'] ?? 0).toString(),
             icon: Icons.camera_alt,
-            color: const Color(0xFF4ECDC4),  // Teal
+            color: CinematicColors.accent,
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: _StatCard(
             title: 'Revenue',
-            value: '₱1,240',  // Changed from \$ to ₱
+            value: '₱${(_stats['totalRevenue'] ?? 0).toStringAsFixed(0)}',
             icon: Icons.attach_money,
-            color: const Color(0xFFFF6B6B),  // Coral
+            color: CinematicColors.highlight,
           ),
         ),
       ],
@@ -113,42 +396,50 @@ class DashboardScreen extends StatelessWidget {
   }
 
   Widget _buildBookingsList() {
-    final bookings = [
-      {
-        'name': 'John Doe', 
-        'gear': 'Canon EOS R5', 
-        'date': 'Today, 2:00 PM',
-        'status': 'Confirmed',
-        'amount': '₱250'  // Changed from \$ to ₱
-      },
-      {
-        'name': 'Jane Smith', 
-        'gear': 'Sony A7IV', 
-        'date': 'Tomorrow, 10:00 AM',
-        'status': 'Pending',
-        'amount': '₱180'  // Changed from \$ to ₱
-      },
-      {
-        'name': 'Mike Johnson', 
-        'gear': 'Full Lighting Kit', 
-        'date': 'Jun 15, 1:30 PM',
-        'status': 'Completed',
-        'amount': '₱350'  // Changed from \$ to ₱
-      },
-    ];
+    if (_recentBookings.isEmpty) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.calendar_today_outlined,
+              size: 64,
+              color: Colors.grey[600],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'No bookings yet',
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey[600],
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Create your first booking using the + button',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[500],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
 
     return ListView.separated(
-      itemCount: bookings.length,
+      itemCount: _recentBookings.length,
       separatorBuilder: (context, index) => Divider(
-        color: Colors.grey[800],  // Darker divider
+        color: Colors.grey[800],
         height: 1,
       ),
       itemBuilder: (context, index) {
-        final booking = bookings[index];
+        final booking = _recentBookings[index];
         return Card(
           elevation: 0,
           margin: const EdgeInsets.symmetric(vertical: 4),
-          color: const Color(0xFF242424),  // Dark card background
+          color: const Color(0xFF242424),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -163,8 +454,8 @@ class DashboardScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [
-                    Color(0xFF2C3E50),  // Dark blue-gray
-                    Color(0xFF4CA1AF),  // Teal
+                    Color(0xFF2C3E50),
+                    Color(0xFF4CA1AF),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -177,19 +468,19 @@ class DashboardScreen extends StatelessWidget {
               ),
             ),
             title: Text(
-              booking['name']!,
+              booking.customerName,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: Colors.white,  // White text
+                color: Colors.white,
               ),
             ),
             subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  booking['gear']!,
+                  booking.equipment.name,
                   style: TextStyle(
-                    color: Colors.grey[400],  // Lighter gray
+                    color: Colors.grey[400],
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -201,23 +492,44 @@ class DashboardScreen extends StatelessWidget {
                         vertical: 2,
                       ),
                       decoration: BoxDecoration(
-                        color: _getStatusColor(booking['status']!)
+                        color: _getStatusColor(booking.status)
                             .withOpacity(0.2),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
-                        booking['status']!,
+                        booking.status,
                         style: TextStyle(
-                          color: _getStatusColor(booking['status']!),
+                          color: _getStatusColor(booking.status),
                           fontSize: 12,
                         ),
                       ),
                     ),
+                    if (booking.isOverdue) ...[
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
+                        decoration: BoxDecoration(
+                          color: CinematicColors.error.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: const Text(
+                          'OVERDUE',
+                          style: TextStyle(
+                            color: CinematicColors.error,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                     const Spacer(),
                     Text(
-                      booking['date']!,
+                      booking.formattedDate,
                       style: TextStyle(
-                        color: Colors.grey[500],  // Medium gray
+                        color: Colors.grey[500],
                         fontSize: 12,
                       ),
                     ),
@@ -230,21 +542,19 @@ class DashboardScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  booking['amount']!,
+                  booking.formattedPrice,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFFE6B325),  // Gold
+                    color: Color(0xFFE6B325),
                   ),
                 ),
                 const Icon(
                   Icons.chevron_right,
-                  color: Color(0xFFE6B325),  // Gold
+                  color: Color(0xFFE6B325),
                 ),
               ],
             ),
-            onTap: () {
-              // Navigate to booking details
-            },
+            onTap: () => _showBookingDetails(booking),
           ),
         );
       },
@@ -254,11 +564,13 @@ class DashboardScreen extends StatelessWidget {
   Color _getStatusColor(String status) {
     switch (status) {
       case 'Confirmed':
-        return const Color(0xFF4ECDC4);  // Teal
+        return CinematicColors.success;
       case 'Pending':
-        return const Color(0xFFE6B325);  // Gold
+        return CinematicColors.warning;
       case 'Completed':
-        return const Color(0xFFA5D8FF);  // Light blue
+        return CinematicColors.accent;
+      case 'Cancelled':
+        return CinematicColors.error;
       default:
         return Colors.grey;
     }
@@ -285,7 +597,7 @@ class _StatCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      color: const Color(0xFF242424),  // Dark card background
+      color: const Color(0xFF242424),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
@@ -331,7 +643,7 @@ class _StatCard extends StatelessWidget {
                 title,
                 style: TextStyle(
                   fontSize: 12,
-                  color: Colors.grey[400],  // Lighter gray
+                  color: Colors.grey[400],
                 ),
               ),
             ],
