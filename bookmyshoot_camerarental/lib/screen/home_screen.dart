@@ -335,7 +335,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: 'High-resolution mirrorless camera',
       price: 110.0,
       rating: 4.6,
-      imageUrl: 'assets/logo.png',
+      imageUrl: 'assets/nikon7.jpg',
       features: [
         '45.7MP Full-Frame Sensor',
         '4K UHD Video',
@@ -348,7 +348,7 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
       description: 'APS-C mirrorless camera',
       price: 85.0,
       rating: 4.5,
-      imageUrl: 'assets/logo.png',
+      imageUrl: 'assets/fujifilm.jpg',
       features: [
         '26.1MP X-Trans CMOS 4 Sensor',
         'In-body Image Stabilization',
@@ -366,97 +366,6 @@ class _CameraItemsScreenState extends State<CameraItemsScreen> {
         'f/2.8 constant aperture',
         'Nano USM Motor',
         'Weather Sealed'
-      ],
-    ),
-    Camera(
-      id: 'lens2',
-      name: 'Sony FE 70-200mm f/2.8 GM',
-      description: 'Professional telephoto zoom lens',
-      price: 85.0,
-      rating: 4.8,
-      imageUrl: 'assets/logo.png',
-      features: [
-        'f/2.8 constant aperture',
-        'Optical SteadyShot',
-        'Fast AF'
-      ],
-    ),
-    Camera(
-      id: 'lens3',
-      name: 'Sigma 35mm f/1.4 Art',
-      description: 'Premium prime lens',
-      price: 55.0,
-      rating: 4.7,
-      imageUrl: 'assets/logo.png',
-      features: [
-        'f/1.4 maximum aperture',
-        'Excellent low-light performance',
-        'Art-series optical quality'
-      ],
-    ),
-    Camera(
-      id: 'lens4',
-      name: 'Tamron 28-75mm f/2.8',
-      description: 'Lightweight standard zoom',
-      price: 50.0,
-      rating: 4.6,
-      imageUrl: 'assets/logo.png',
-      features: [
-        'f/2.8 constant aperture',
-        'Compact and lightweight',
-        'Moisture-resistant construction'
-      ],
-    ),
-    Camera(
-      id: 'acc1',
-      name: 'Manfrotto Tripod',
-      description: 'Professional camera tripod',
-      price: 45.0,
-      rating: 4.5,
-      imageUrl: 'assets/logo.png',
-      features: [
-        'Carbon fiber',
-        'Max height 160cm',
-        'Load capacity 8kg'
-      ],
-    ),
-    Camera(
-      id: 'acc2',
-      name: 'Godox V1 Flash',
-      description: 'Round-head speedlight',
-      price: 40.0,
-      rating: 4.4,
-      imageUrl: 'assets/logo.png',
-      features: [
-        'Round head for soft shadows',
-        'Li-ion battery',
-        '2.4G wireless system'
-      ],
-    ),
-    Camera(
-      id: 'acc3',
-      name: 'Peak Design Camera Strap',
-      description: 'Premium camera strap',
-      price: 25.0,
-      rating: 4.8,
-      imageUrl: 'assets/logo.png',
-      features: [
-        'Quick-adjust system',
-        'Weatherproof materials',
-        'Multiple carrying positions'
-      ],
-    ),
-    Camera(
-      id: 'acc4',
-      name: 'SanDisk Extreme Pro SD Card',
-      description: 'High-speed memory card',
-      price: 30.0,
-      rating: 4.7,
-      imageUrl: 'assets/logo.png',
-      features: [
-        '170MB/s read speed',
-        '128GB capacity',
-        'Shock and water resistant'
       ],
     ),
   ];

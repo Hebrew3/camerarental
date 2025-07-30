@@ -75,6 +75,11 @@ flutter:
     - assets/canon_eos_r5.jpg
     - assets/sony_a7_iv.jpg
     - assets/canon_rf_24_70mm.jpg
+    - assets/nikon7.jpg
+    - assets/fujifilm.jpg
+    - assets/sonyFE.jpg
+    - assets/sigma.jpg
+    - assets/sandisk.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
